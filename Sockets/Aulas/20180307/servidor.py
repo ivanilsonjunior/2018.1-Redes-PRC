@@ -1,5 +1,6 @@
 # Echo server program
 import socket
+import pickle
 
 HOST = ''                 # Symbolic name meaning all available interfaces
 PORT = 50007              # Arbitrary non-privileged port
@@ -19,7 +20,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 retorno = data.decode('utf-8')
                 retorno = str(contador) + ': ' +  retorno
                 data = retorno.encode('utf-8')
-                print('Conexaum de: ', addr, ' (', data , ')')
+                print(u'Conexão de: ', addr, ' (', data , ')')
                 lista.append(data)
-                conn.sendall(str(lista).encode('utf-8'))
+                data = pickle.dumps(lista)
+                conn.sendall(data)
 
