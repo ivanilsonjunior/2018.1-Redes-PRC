@@ -4,16 +4,27 @@ import psycopg2
 
 conexao = "dbname=noticia user=postgres host=localhost"
 
-def principal():
-    print (table_exists("noticia"))
 
-    if (table_exists('noticia')):
+'''
+Metodo principal
+'''
+def principal():
+    if (table_exists("noticias")):
         print ("Banco e tabela encontrados, iniciando a busca")
     else:
         print ("Criando banco e tabela")
         criarBanco()
-    insereNoticia(getPrincipal())
-
+        insereNoticia(getPrincipal())
+    atual = getPrincipal()
+    ultima = getUltima()
+    if atual == ultima:
+        print ("Mesma Noticia no Site: ", atual)
+    else:
+        print ("Sao Diferentes, atualizando para: ", ultima)
+        insereNoticia(atual)
+'''
+Metodo que verifica se a tabela existe
+'''
 def table_exists(table_str):
     exists = False
     try:
@@ -26,6 +37,13 @@ def table_exists(table_str):
     except psycopg2.Error as e:
         print (e)
     return exists
+
+def getUltima():
+    conn = psycopg2.connect(conexao)
+    cur = conn.cursor()
+    cur.execute("select conteudo from  noticias order by data desc limit 1")
+    resultado = cur.fetchone()[0]
+    return resultado
 
 def getPrincipal():
     pagina = requests.get("http://www.globo.com")
@@ -40,15 +58,17 @@ def criarBanco():
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
     cur.execute('CREATE DATABASE noticia')
-    conn = psycopg2.connect("dbname=postgres user=postgres host=localhost")
+    conn = psycopg2.connect(conexao)
     cur = conn.cursor()
-    cur.execute("CREATE TABLE noticias (id serial PRIMARY KEY, conteudo text, data date);")
-    cur.commit()
+    cur.execute("CREATE TABLE noticias (id serial PRIMARY KEY, conteudo text, data timestamp);")
+    conn.commit()
     conn.close()
 
 def insereNoticia(noticia):
     conn = psycopg2.connect(conexao)
     cur = conn.cursor()
-    cur.execute("INSERT INTO noticias (conteudo, data) VALUES (%s, now())", noticia)
+    cur.execute("INSERT INTO noticias (conteudo, data) VALUES (%s, now())", (str(noticia),))
+    conn.commit()
+    conn.close()
 
 if __name__ == "__main__": principal()
