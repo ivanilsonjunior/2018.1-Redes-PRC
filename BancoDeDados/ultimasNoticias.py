@@ -20,7 +20,7 @@ def principal():
     if atual == ultima:
         print ("Mesma Noticia no Site: ", atual)
     else:
-        print ("Sao Diferentes, atualizando para: ", ultima)
+        print ("Sao Diferentes, atualizando para: ", atual)
         insereNoticia(atual)
 '''
 Metodo que verifica se a tabela existe
@@ -38,6 +38,9 @@ def table_exists(table_str):
         print (e)
     return exists
 
+'''
+Metodo que recupera a ultima noticia no banco 
+'''
 def getUltima():
     conn = psycopg2.connect(conexao)
     cur = conn.cursor()
@@ -45,6 +48,9 @@ def getUltima():
     resultado = cur.fetchone()[0]
     return resultado
 
+'''
+Metodo que recupera a noticia no site
+'''
 def getPrincipal():
     pagina = requests.get("http://www.globo.com")
     conteudo = html.fromstring(pagina.content)
@@ -52,6 +58,9 @@ def getPrincipal():
     principal = noticias[0]
     return principal
 
+'''
+Metodo que cria o banco e a tabela 
+'''
 def criarBanco():
     from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
     conn = psycopg2.connect("dbname=postgres user=postgres host=localhost")
@@ -64,6 +73,9 @@ def criarBanco():
     conn.commit()
     conn.close()
 
+'''
+Metodo que insere a noticia no banco
+'''
 def insereNoticia(noticia):
     conn = psycopg2.connect(conexao)
     cur = conn.cursor()
