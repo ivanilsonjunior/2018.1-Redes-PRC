@@ -7,3 +7,4 @@ echo "Lembre-se que a senha de aluno é aluno"
 sudo -H pip3 install --upgrade pip
 sudo -H pip3 install psycopg2 
 sudo -H pip3 install psycopg2-binary
+sudo -H pip3 install ipython
