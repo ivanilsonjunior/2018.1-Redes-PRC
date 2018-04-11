@@ -8,3 +8,4 @@ sudo -H pip3 install --upgrade pip
 sudo -H pip3 install psycopg2 
 sudo -H pip3 install psycopg2-binary
 sudo -H pip3 install ipython
+#git config --global user.email "SEUEMAILDOGIT@email.com"
