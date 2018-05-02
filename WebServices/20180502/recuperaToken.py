@@ -14,8 +14,7 @@ def getToken():
     response = requests.post(urls['token'], data=autenticacao)
     if response.status_code == 200:
         return json.loads(response.content.decode('utf-8'))['token']
-    else:
-        return None
+    return None
 
 cabecalho={'Authorization': 'JWT {0}'.format(getToken())}
 
