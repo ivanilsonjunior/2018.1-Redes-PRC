@@ -23,8 +23,7 @@ def getInformacoes():
     response = requests.get(urls['dados'], headers=cabecalho)
     if response.status_code == 200:
         return response.content.decode('utf-8')
-    else:
-        return None
+    return None
 
 informacoes = json.loads(getInformacoes())
 # Para ver o conteudo de informacoes, descomente a linha abaixo
