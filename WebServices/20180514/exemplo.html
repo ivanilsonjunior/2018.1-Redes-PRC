@@ -1,0 +1,41 @@
+<html>
+
+<head>
+   <title>Teste Form</title>
+</head>
+
+<body>
+
+   <form action="exibe_dados.py" method="post">
+      <label for="nome">Nome:</label>
+      <input name="nome" type="text" id="nome" />
+
+      <label for="senha">Senha:</label>
+      <input name="senha" type="password" id="senha" />
+
+      <br/>
+
+      <label for="sexo">Sexo:</label>
+      <br/>
+      <input type="radio" name="sexo" value="M">Masculino
+      <br/>
+      <input type="radio" name="sexo" value="F">Feminino
+
+      <br/>
+      <label for="estado_civil">Estado Civil:</label>
+      <br/>
+      <input type="radio" name="estado_civil" value="Casado">Casado
+      <br/>
+      <input type="radio" name="estado_civil" value="Solteiro">Solteiro
+      <br/>
+      <input type="radio" name="estado_civil" value="Outros">Outros
+
+      <br/>
+
+      <button type="submit">Enviar Dados</button>
+   </form>
+
+</body>
+
+</html>
+
